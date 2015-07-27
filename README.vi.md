@@ -33,7 +33,7 @@ Khuyến khích chạy luôn `gem install thin`, Sinatra sẽ dùng nó nếu c�
 * [Sinatra](#sinatra)
     * [Table of Contents](#table-of-contents)
     * [Routes](#routes)
-    * [Conditions](#conditions)
+    * [Điều kiện (Conditions)](#Điều-kiện-conditions)
     * [Return Values](#return-values)
     * [Custom Route Matchers](#custom-route-matchers)
     * [Static Files](#static-files)
@@ -248,25 +248,25 @@ end
 Nhân tiện, trừ khi bạn vô hiệu hóa *path traversal attack protection* (xem bên dưới),
 đường dẫn request có thể bị chỉnh sửa trước khi khớp với các route của bạn.
 
-## Conditions
+## Điều kiện (Conditions)
 
-Routes may include a variety of matching conditions, such as the user agent:
+Các route có thể chứa nhiều loại điều kiện khớp, ví dụ như *user agent*:
 
 ``` ruby
 get '/foo', :agent => /Songbird (\d\.\d)[\d\/]*?/ do
-  "You're using Songbird version #{params['agent'][0]}"
+  "Bạn đang sử dụng phiên bản Songbird #{params['agent'][0]}"
 end
 
 get '/foo' do
-  # Matches non-songbird browsers
+  # Khớp các trình duyệt không phải songbird (non-songbird)
 end
 ```
 
-Other available conditions are `host_name` and `provides`:
+Các điều kiện có sẵn khác là `host_name` và `provides`:
 
 ``` ruby
 get '/', :host_name => /^admin\./ do
-  "Admin Area, Access denied!"
+  "Khu vực admin, truy cập bị từ chối!"
 end
 
 get '/', :provides => 'html' do
@@ -277,26 +277,26 @@ get '/', :provides => ['rss', 'atom', 'xml'] do
   builder :feed
 end
 ```
-`provides` searches the request's Accept header.
+`provides` tìm *Accept header* của request.
 
-You can easily define your own conditions:
+Bạn có thể dễ dàng xác định các điệu kiện riêng của mình:
 
 ``` ruby
 set(:probability) { |value| condition { rand <= value } }
 
 get '/win_a_car', :probability => 0.1 do
-  "You won!"
+  "Bạn đã thắng!"
 end
 
 get '/win_a_car' do
-  "Sorry, you lost."
+  "Rất tiếc, bạn đã thua."
 end
 ```
 
-For a condition that takes multiple values use a splat:
+Đối với điều kiện lấy nhiều giá trị, hãy sử dụng một splat:
 
 ``` ruby
-set(:auth) do |*roles|   # <- notice the splat here
+set(:auth) do |*roles|   # <- chú ý slat ở đây
   condition do
     unless logged_in? && roles.any? {|role| current_user.in_role? role }
       redirect "/login/", 303
@@ -305,11 +305,11 @@ set(:auth) do |*roles|   # <- notice the splat here
 end
 
 get "/my/account/", :auth => [:user, :admin] do
-  "Your Account Details"
+  "Chi tiết tài khoản của bạn"
 end
 
 get "/only/admin/", :auth => :admin do
-  "Only admins are allowed here!"
+  "Chỉ có các admin mới được phép ở đây"
 end
 ```
 
