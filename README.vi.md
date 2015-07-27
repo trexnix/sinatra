@@ -34,7 +34,7 @@ Khuyến khích chạy luôn `gem install thin`, Sinatra sẽ dùng nó nếu c�
     * [Table of Contents](#table-of-contents)
     * [Routes](#routes)
     * [Conditions](#conditions)
-    * [Return Values](#return-values)
+    * [Giá trị trả về (Return Values)](#giá-trị-trả-về-return-values)
     * [Custom Route Matchers](#custom-route-matchers)
     * [Static Files](#static-files)
     * [Views / Templates](#views--templates)
@@ -313,25 +313,24 @@ get "/only/admin/", :auth => :admin do
 end
 ```
 
-## Return Values
+## Giá trị trả về (Return Values)
 
-The return value of a route block determines at least the response body passed
-on to the HTTP client, or at least the next middleware in the Rack stack.
-Most commonly, this is a string, as in the above examples. But other values are
-also accepted.
+Giá trị trả về của một block route xác định ít nhất phần *response body* được chuyển
+lại cho *HTTP client*, hoặc ít nhất *middleware* kế tiếp trên *Rack stack*.
+Phổ biến nhất là một string, như ở các ví dụ trên. Nhưng các giá trị khác
+cũng được chấp nhận.
 
-You can return any object that would either be a valid Rack response, Rack
-body object or HTTP status code:
+Bạn cũng có thể trả về bất kì object nào mà, hoặc là một *Rack response* hợp lệ, một *Rack body object* hoặc một *HTTP status code*: 
 
-* An Array with three elements: `[status (Fixnum), headers (Hash), response
+* Một Array với ba phần tử: `[status (Fixnum), headers (Hash), response
   body (responds to #each)]`
-* An Array with two elements: `[status (Fixnum), response body (responds to
+* Một Array với hai phần tử: `[status (Fixnum), response body (responds to
   #each)]`
-* An object that responds to `#each` and passes nothing but strings to
-  the given block
-* A Fixnum representing the status code
+* Một object có thể gọi hàm `#each` (responds to `#each`) và không truyền gì ngoài các string tới
+  block đã cho.
+* Một Fixnum đại diện cho *status code*
 
-That way we can, for instance, easily implement a streaming example:
+Chẳng hạn như, theo đó, chúng ta có thể dễ dàng triển khai một ví dụ về *streaming*:
 
 ``` ruby
 class Stream
@@ -343,8 +342,9 @@ end
 get('/') { Stream.new }
 ```
 
-You can also use the `stream` helper method (described below) to reduce boiler
-plate and embed the streaming logic in the route.
+Bạn cũng có thể dùng `stream` *helper method* (được mô tả bên dưới) để giảm bớt
+*boiler plate* và nhúng streaming logic vào route.
+
 
 ## Custom Route Matchers
 
